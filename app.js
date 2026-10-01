@@ -57,7 +57,7 @@ function play(id, title, srcs) {
 }
 function detail(t) {
   const m = $('#main'), eps = t.episodes || [];
-  m.innerHTML = `<div class="row"><button class="g" id="b">‹</button><button class="g" id="f">${fav.has(t.id) ? '★ Quitar' : '☆ Favorito'}</button></div><h2>${esc(t.title)}</h2><p class="msg">${esc(t.synopsis || '')}</p>` +
+  m.innerHTML = `<div class="row"><button class="g" id="b" aria-label="Volver">‹ Volver</button><button class="g" id="f">${fav.has(t.id) ? '★ Quitar' : '☆ Favorito'}</button></div><h2>${esc(t.title)}</h2><p class="msg">${esc(t.synopsis || '')}</p>` +
     (t.sources && t.sources.length ? '<div class="row"><button id="p">Reproducir</button></div>' : '') +
     eps.map((e, i) => `<div class="card" data-e="${i}" style="margin:8px 0">T${e.season}·E${e.number} ${esc(e.title)}</div>`).join('');
   $('#b').onclick = render;
@@ -65,8 +65,10 @@ function detail(t) {
   if ($('#p')) $('#p').onclick = () => play(t.id, t.title, t.sources);
   m.querySelectorAll('[data-e]').forEach(c => c.onclick = () => { const e = eps[c.dataset.e]; play(t.id + '/' + e.id, e.title, e.sources || []); });
 }
-$('#tabs').onclick = e => { if (e.target.dataset.t) { tab = e.target.dataset.t; render(); } };
+$('#tabs').onclick = e => { const b = e.target.closest('[data-t]'); if (b) { tab = b.dataset.t; render(); scrollTo(0, 0); } };
 $('#q').oninput = render;
+$('#q').onkeydown = e => { if (e.key === 'Enter') e.target.blur(); };
+addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#player').hidden) $('#close').click(); });
 $('#main').onclick = e => { const c = e.target.closest('[data-id]'); if (c) detail(titles.find(t => t.id === c.dataset.id)); };
 $('#close').onclick = () => { $('#v').pause(); $('#v').removeAttribute('src'); $('#player').hidden = true; };
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});

@@ -5,8 +5,8 @@
 <meta name="theme-color" content="#0d0d12"><title>Xuper Study</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="stylesheet" href="app.css"></head><body>
-<header><h1>Xuper</h1><input id="q" type="search" placeholder="Buscar"></header>
+<header><h1>Xuper</h1><input id="q" type="search" placeholder="Buscar" enterkeyhint="search" autocomplete="off" autocapitalize="none" aria-label="Buscar títulos"></header>
 <main id="main"></main>
-<nav id="tabs"></nav>
-<div id="player" hidden><button id="close">✕</button><div id="ptitle"></div><video id="v" controls playsinline></video><div id="srcs"></div></div>
+<nav id="tabs" aria-label="Secciones"></nav>
+<div id="player" hidden><button id="close" aria-label="Cerrar reproductor">✕</button><div id="ptitle"></div><video id="v" controls playsinline webkit-playsinline preload="metadata"></video><div id="srcs"></div></div>
 <script src="app.js"></script></body></html>
